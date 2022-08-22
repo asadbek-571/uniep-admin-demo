@@ -1,0 +1,78 @@
+[
+  {
+    "id": "868583",
+    "name": [
+      "Asadbek Kushakov Abdujalil o'g'li",
+      false,
+      "1"
+    ],
+    "date": "12 Jan 2021",
+    "phone": "+998979497771",
+    "status": "To'landi"
+  },
+  {
+    "id": "345895",
+    "name": [
+      "Dilnoza Egamberdiyeva Shuxrat qizi",
+      false,
+      "2"
+    ],
+    "date": "21 Feb 2021",
+    "phone": "+998979496666",
+    "status": "To'landi"
+  },
+  {
+    "id": "434312",
+    "name": [
+      "Javohir Javohirov Javohir o'g'li",
+      false,
+      "3"
+    ],
+    "date": "13 Mar 2021",
+    "phone": "+998979497345",
+    "status": "To'landi"
+  },{
+    "id": "434312",
+    "name": [
+      "Javohir Javohirov Javohir o'g'li",
+      false,
+      "4"
+    ],
+    "date": "13 Mar 2021",
+    "phone": "+998979497345",
+    "status": "To'landi"
+  },
+  {
+    "id": "223412",
+    "name": [
+      "Dilshod Dilshodov Dilshod o'g'li",
+      false,
+      "5"
+    ],
+    "date": "24 Jan 2021",
+    "phone": "+998979444471",
+    "status": "To'landi"
+  },
+  {
+    "id": "215654",
+    "name": [
+      "Behzod Karimov Sherzod o'g'li",
+      false,
+      "6"
+    ],
+    "date": "24 Oct 2022",
+    "phone": "+998971234567",
+    "status": "To'lanmadi"
+  },
+  {
+    "id": "212654",
+    "name": [
+      "Behzod Karimov Sherzod o'g'li",
+      false,
+      "7"
+    ],
+    "date": "24 Oct 2022",
+    "phone": "+998971234567",
+    "status": "To'lanmadi"
+  }
+]

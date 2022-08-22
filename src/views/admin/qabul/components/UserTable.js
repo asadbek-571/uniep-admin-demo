@@ -1,0 +1,254 @@
+import {
+    Flex,
+    Table,
+    Progress,
+    Icon,
+    Tbody,
+    Td,
+    Text,
+    Th,
+    Thead,
+    Tr,
+    FormErrorMessage,
+    FormLabel,
+    FormControl,
+    Input,
+    Button,
+    useColorModeValue, Grid, Box, useColorMode, Link,
+} from "@chakra-ui/react";
+import {useForm} from 'react-hook-form'
+
+
+import React, {useMemo} from "react";
+import {
+    useGlobalFilter,
+    usePagination,
+    useSortBy,
+    useTable,
+} from "react-table";
+
+// Custom components
+import Card from "components/card/Card";
+import Menu from "components/menu/MainMenu";
+
+// Assets
+import {
+    MdOutlinePhone,
+    MdOutlineBook
+} from "react-icons/md";
+
+export default function UserListTable(props) {
+    const {columnsData, tableData} = props;
+
+    const columns = useMemo(() => columnsData, [columnsData]);
+    const data = useMemo(() => tableData, [tableData]);
+    const { colorMode } = useColorMode();
+    const tableInstance = useTable(
+        {
+            columns,
+            data,
+        },
+        useGlobalFilter,
+        useSortBy,
+        usePagination
+    );
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        page,
+        prepareRow,
+        initialState,
+    } = tableInstance;
+    initialState.pageSize = 11;
+
+    const textColor = useColorModeValue("secondaryGray.900", "white");
+    const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+    const {
+        handleSubmit,
+        formState: {errors, isSubmitting},
+    } = useForm()
+
+    function onSubmit(values) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                alert(JSON.stringify(values, null, 2))
+                resolve()
+            }, 3000)
+        })
+    }
+
+    return (
+        <>
+            <Card
+                direction='column'
+                w='100%'
+                px='10px'
+                overflowX={{sm: "scroll", lg: "hidden"}}>
+                <Box pt={{base: "10px", md: "10px", xl: "10px"}}>
+                    {/* Main Fields */}
+                    <Grid
+                        templateColumns={{
+                            base: "1fr",
+                            lg: "1.34fr 1fr 1.62fr",
+                        }}
+                        templateRows={{
+                            base: "repeat(1, 1fr)",
+                            lg: "1fr",
+                        }}
+                        gap={{base: "10px", xl: "10px"}}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <Flex px='25px' justify='space-between' align='center'>
+                                <FormControl>
+                                    <FormLabel htmlFor='tel'><Icon as={MdOutlinePhone} h='16px' w='16px' me='8px' /> Telefon</FormLabel>
+                                    <Input
+
+                                        id='tel'
+                                        placeholder='telefon'
+                                    />
+                                </FormControl>
+                                <FormControl style={{margin: "10px"}} >
+                                    <FormLabel htmlFor='name'><Icon as={MdOutlineBook} h='16px' w='16px' me='8px' /> Passport</FormLabel>
+                                    <Input
+                                        id='passport'
+                                        placeholder='passport'
+                                    />
+                                </FormControl>
+                                <FormControl style={{margin: "10px"}} isInvalid={errors.passport}>
+
+                                </FormControl>
+                            </Flex>
+                            <Button ml={5} mt={4} colorScheme='blue' isLoading={isSubmitting} type='submit'>
+                                Yuborish
+                            </Button>
+                        </form>
+                    </Grid>
+                </Box>
+            </Card>
+            <Card
+                direction='column'
+                w='100%'
+                px='0px'
+                overflowX={{sm: "scroll", lg: "hidden"}}>
+                <Flex px='25px' justify='space-between' mb='20px' align='center'>
+                    <Text
+                        color={textColor}
+                        fontSize='22px'
+                        fontWeight='700'
+                        lineHeight='100%'>
+                        Qabul Ro'yxati
+                    </Text>
+                    <Menu/>
+                </Flex>
+                <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+                    <Thead>
+                        {headerGroups.map((headerGroup, index) => (
+                            <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                                {headerGroup.headers.map((column, index) => (
+                                    <Th
+                                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                                        pe='10px'
+                                        key={index}
+                                        borderColor={borderColor}>
+                                        <Flex
+                                            justify='space-between'
+                                            align='center'
+                                            fontSize={{sm: "10px", lg: "12px"}}
+                                            color='gray.400'>
+                                            {column.render("Header")}
+                                        </Flex>
+                                    </Th>
+                                ))}
+                            </Tr>
+                        ))}
+                    </Thead>
+                    <Tbody {...getTableBodyProps()}>
+                        {page.map((row, index) => {
+                            prepareRow(row);
+                            return (
+                                <Tr _hover={{bg: colorMode === "light" ? "blue.100":"blue.700", color: "white"}} {...row.getRowProps()} key={index}>
+                                    {row.cells.map((cell, index) => {
+                                        let data = "";
+                                        if (cell.column.Header === "ID") {
+                                            data = (
+                                                <Flex align='center'>
+                                                    {/*<Checkbox*/}
+                                                    {/*  defaultChecked={cell.value[1]}*/}
+                                                    {/*  colorScheme='brandScheme'*/}
+                                                    {/*  me='10px'*/}
+                                                    {/*/>*/}
+                                                    <Text color={textColor} fontSize='sm' fontWeight='700'>
+                                                        {cell.value}
+                                                    </Text>
+                                                </Flex>
+                                            );
+                                        } else if (cell.column.Header === "FIO") {
+                                            data = (
+                                                <Flex align='center'>
+                                                    <Link
+                                                        href={""}
+                                                        mt={{
+                                                            base: "0px",
+                                                            md: "10px",
+                                                            lg: "0px",
+                                                            xl: "10px",
+                                                            "2xl": "0px",
+                                                        }}>
+                                                        <Text _hover={{color: "blue" }} color={textColor} fontSize='sm' fontWeight='700'>
+                                                            {cell.value}
+                                                        </Text>
+                                                    </Link>
+                                                </Flex>
+                                            );
+                                        } else if (cell.column.Header === "TELEFON") {
+                                            data = (
+                                                <Flex align='center'>
+                                                    <Text
+                                                        me='10px'
+                                                        color={textColor}
+                                                        fontSize='sm'
+                                                        fontWeight='700'>
+                                                        {cell.value}
+                                                    </Text>
+                                                </Flex>
+                                            );
+                                        } else if (cell.column.Header === "TOPSHIRGAN VAQTI") {
+                                            data = (
+                                                <Text color={textColor} fontSize='sm' fontWeight='700'>
+                                                    {cell.value}
+                                                </Text>
+                                            );
+                                        } else if (cell.column.Header === "TO'LOV") {
+                                            data = (
+                                                <Text color={cell.value === "To'landi"
+                                                    ? "green.500"
+                                                    : cell.value === "To'lanmadi"
+                                                        ? "red.500"
+                                                        : cell.value === "Kantrakt"
+                                                            ? "orange.500"
+                                                            : null} fontSize='sm' fontWeight='700'>
+                                                    {cell.value}
+                                                </Text>
+                                            );
+                                        }
+                                        return (
+                                            <Td
+                                                {...cell.getCellProps()}
+                                                key={index}
+                                                fontSize={{sm: "14px"}}
+                                                minW={{sm: "150px", md: "200px", lg: "auto"}}
+                                                borderColor='transparent'>
+                                                {data}
+                                            </Td>
+                                        );
+                                    })}
+                                </Tr>
+                            );
+                        })}
+                    </Tbody>
+                </Table>
+            </Card>
+        </>
+    );
+}
